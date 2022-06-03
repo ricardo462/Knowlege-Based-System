@@ -3,6 +3,9 @@ class Rule:
         self.identifier = identifier
         self.premise = premise
         self.conclusion = conclusion
+    
+    def __repr__(self) -> str:
+        return self.identifier
 
 
     def __str__(self):
