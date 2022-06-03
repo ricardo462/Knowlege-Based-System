@@ -92,70 +92,70 @@ elefante = 'animal es elefante'
 
 
 
-R1 = Rule('R1', (pelo), 
+R1 = Rule('R1', [pelo], 
                 [(mamifero, 0.8), (ave, -1.0), (reptil, -1.0)])
 
-R2 = Rule('R2', (leche), 
+R2 = Rule('R2', [leche], 
                 [(mamifero, 1.0), (ave, -1.0), (reptil, -1.0)])
 
-R3 = Rule('R3', (huevos, piel_dura), 
+R3 = Rule('R3', [huevos, piel_dura], 
                 [(mamifero, -1.0), (ave, -1.0), (reptil, 1.0)])
 
-R4 = Rule('R4', (huevos, volar), 
+R4 = Rule('R4', [huevos, volar], 
                 [(ave, 1.0), (reptil, -1.0)])
 
-R5 = Rule('R5', (plumas), 
+R5 = Rule('R5', [plumas], 
                 [(mamifero, -1.0), (ave, 1.0), (reptil, -1.0)])
 
-R6 = Rule('R6', (carne), 
+R6 = Rule('R6', [carne], 
                 [(carnivoro, 1.0)])
 
-R7 = Rule('R7', (garras), 
+R7 = Rule('R7', [garras], 
                 [(carnivoro, 0.8)])
 
-R8 = Rule('R8', (mamifero, pezunas),
+R8 = Rule('R8', [mamifero, pezunas],
                 [(ungulado, 1.0)])
 
-R9 = Rule('R9', (mamifero, rumiante), 
+R9 = Rule('R9', [mamifero, rumiante], 
                 [(ungulado, 0.75)])
 
-R10 = Rule('R10', (personas),
+R10 = Rule('R10', [personas],
                 [(domestico, 0.9)])
 
-R11 = Rule('R11', (zoologico), 
+R11 = Rule('R11', [zoologico], 
                 [(domestico, -0.8)])
 
-R12 = Rule('R12', (mamifero, carnivoro, manchas), 
+R12 = Rule('R12', [mamifero, carnivoro, manchas], 
                 [(cheetah, 0.9)])
 
-R13 = Rule('R13', (mamifero, carnivoro, rayas_negras), 
+R13 = Rule('R13', [mamifero, carnivoro, rayas_negras], 
                 [(tigre, 0.85)])
 
-R14 = Rule('R14', (mamifero, carnivoro, domestico), 
+R14 = Rule('R14', [mamifero, carnivoro, domestico], 
                 [(perro, 0.9)])
 
-R15 = Rule('R15', (reptil, domestico), 
+R15 = Rule('R15', [reptil, domestico], 
                 [(tortuga, 0.7)])
 
-R16 = Rule('R16', (mamifero, ungulado, cuello_largo), 
+R16 = Rule('R16', [mamifero, ungulado, cuello_largo], 
                 [(jirafa, 1.0)])
 
-R17 = Rule('R17', (mamifero, ungulado, rayas_negras), 
+R17 = Rule('R17', [mamifero, ungulado, rayas_negras], 
                 [(cebra, 0.95)])
 
-R18 = Rule('R18', (mamifero, volar, feo), 
+R18 = Rule('R18', [mamifero, volar, feo], 
                 [(murcielago, 0.9)])
 
-R19 = Rule('R19', (ave, vuela_bien),
+R19 = Rule('R19', [ave, vuela_bien],
             [(gaviota, 0.9)])
 
-R20 = Rule('R20', (ave, corre_rapido), 
+R20 = Rule('R20', [ave, corre_rapido], 
                 [(avestruz, 1.0)])
 
-R21 = Rule('R21', (ave, parlanchin), 
+R21 = Rule('R21', [ave, parlanchin], 
                 [(loro, 0.95)])
 
-R22 = Rule('R22', (mamifero, grande, ungulado, trompa),
+R22 = Rule('R22', [mamifero, grande, ungulado, trompa],
                 [(elefante, 0.9)])
 
 
@@ -173,7 +173,7 @@ hypotheses = [(perro, 0.0),
                 (loro, 0.0)]
 
 # Returns all the relevant rules that can prove an hypothesis
-def get_relevant_rules(rules, hypothesis):
+def get_relevant_rules(hypothesis, rules):
     relevant_rules = []
     for rule in rules:
         for conclusion in rule.conclusion:
@@ -181,4 +181,40 @@ def get_relevant_rules(rules, hypothesis):
                 relevant_rules.append(rule)
     return relevant_rules
 
-print(get_relevant_rules(rules, mamifero))
+
+to_check = [perro] 
+
+facts = []
+def check(hypothesis, facts):
+    for fact in facts:
+        if hypothesis == fact[0] and abs(fact[1]) >= data['alpha']:
+            return fact[1]
+
+    return False
+
+
+def demonstrate_hypothesis(hypothesis, facts, rules):
+    relevant_rules = get_relevant_rules(hypothesis, rules)
+    # Ground cases
+
+    # returns the certain if an hypothsis can be proved
+    certain = check(hypothesis, facts)
+    if certain:
+        return  certain
+
+    # asks to the user if an hypothesis can not be proved
+    if relevant_rules == []:
+        #print(hypothesis)
+        #text = f'Certain for {hypothesis}'
+        #print(text)
+        pass
+    # Hypotheses are demonstrated recursively
+    for rule in relevant_rules:
+        premise = rule.premise
+        f'Certain for {hypothesis}'
+        
+        for clause in premise:
+            demonstrate_hypothesis(clause, facts, rules)
+
+
+print(demonstrate_hypothesis(perro, facts, rules))
