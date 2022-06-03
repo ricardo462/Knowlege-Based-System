@@ -8,10 +8,11 @@ class Premise:
             text += f'\n\t{str(clause)}'
         return f'Premise: {text}'
 
-from Clause import Clause
+if __name__ == '__main__':
+    from model.Clause import Clause
 
-c1 = Clause('animal tiene pelo')
-c2 = Clause('animal tiene plumas')
+    c1 = Clause('animal tiene pelo')
+    c2 = Clause('animal tiene plumas')
 
-p = Premise(c1, c2)
-print(p)
+    p = Premise(c1, c2)
+    print(p)

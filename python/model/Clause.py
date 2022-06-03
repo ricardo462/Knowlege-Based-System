@@ -1,4 +1,4 @@
-from Triplet import Triplet
+from model.Triplet import Triplet
 class Clause(Triplet):
     def __init__(self, triplet) -> None:
         super().__init__(triplet)
