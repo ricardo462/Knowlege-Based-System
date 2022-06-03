@@ -10,6 +10,12 @@ class Rule:
 
     def __str__(self):
         return f'Rule {self.identifier}:\n\t{str(self.premise)} \n \t\t {str(self.conclusion)}' 
+
+    def get_vc(self, hypothesis):
+        for action in self.conclusion:
+            if hypothesis == action[0]:
+                return action[1]
+        return None
     
 if __name__ == 'main':
     from model.Premise import Premise

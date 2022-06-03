@@ -2,12 +2,15 @@ import json
 from model.Clause import Clause
 from model.Action import Action
 from model.Rule import Rule
+from utils import *
 
 PARAMETERS_PAHT = 'python/parameters.json'
 
 
 with open(PARAMETERS_PAHT) as json_file:
     data = json.load(json_file)
+
+epsilon = data['epsilon']
 
 
 ###### Clauses #######
@@ -172,19 +175,10 @@ hypotheses = [(perro, 0.0),
                 (avestruz, 0.0), 
                 (loro, 0.0)]
 
-# Returns all the relevant rules that can prove an hypothesis
-def get_relevant_rules(hypothesis, rules):
-    relevant_rules = []
-    for rule in rules:
-        for conclusion in rule.conclusion:
-            if hypothesis in conclusion:
-                relevant_rules.append(rule)
-    return relevant_rules
-
-
 to_check = [perro] 
-
 facts = []
+
+
 def check(hypothesis, facts):
     for fact in facts:
         if hypothesis == fact[0] and abs(fact[1]) >= data['alpha']:
@@ -193,7 +187,9 @@ def check(hypothesis, facts):
     return False
 
 
-def demonstrate_hypothesis(hypothesis, facts, rules):
+def demonstrate_hypothesis(hypothesis, facts, rules, current_rule=None):
+    #print(f'Checking {hypothesis}')
+    print(current_rule)
     relevant_rules = get_relevant_rules(hypothesis, rules)
     # Ground cases
 
@@ -204,17 +200,20 @@ def demonstrate_hypothesis(hypothesis, facts, rules):
 
     # asks to the user if an hypothesis can not be proved
     if relevant_rules == []:
-        #print(hypothesis)
-        #text = f'Certain for {hypothesis}'
-        #print(text)
-        pass
+        vc = float(input(f'Certain for {hypothesis}'))
+        # Checking if the vc of the action is greater than epsilon
+        for action in current_rule.conclusion:
+            vc_rule = action[1]
+            if vc_rule >= epsilon:
+                facts.append((hypothesis, vc * vc_rule))
+
     # Hypotheses are demonstrated recursively
     for rule in relevant_rules:
         premise = rule.premise
         f'Certain for {hypothesis}'
         
         for clause in premise:
-            demonstrate_hypothesis(clause, facts, rules)
+            demonstrate_hypothesis(clause, facts, rules, current_rule=rule)
 
-
-print(demonstrate_hypothesis(perro, facts, rules))
+demonstrate_hypothesis(perro, facts, rules)
+print(facts)
