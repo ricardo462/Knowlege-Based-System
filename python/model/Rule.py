@@ -17,14 +17,9 @@ class Rule:
                 return action[1]
         return None
     
-if __name__ == 'main':
-    from model.Premise import Premise
-    from model.Clause import Clause
+    def prove(self, vc):
+        conclusion = []
+        for action in self.conclusion:
+            conclusion.append((action.prove(vc)))
 
-    c1 = Clause('animal tiene pelo')
-    c2 = Clause('animal tiene plumas')
-
-    p = Premise(c1, c2)
-
-    R1 = Rule('R1', p, (('animal es mamífero', 0.8), ('animal es ave', -1.0), ('animal es reptil', -1.0)))
-    print(R1)
+        return conclusion

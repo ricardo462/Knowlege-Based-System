@@ -1,4 +1,6 @@
 import json
+
+from numpy import append
 from model.Clause import Clause
 from model.Action import Action
 from model.Rule import Rule
@@ -11,7 +13,7 @@ with open(PARAMETERS_PAHT) as json_file:
     data = json.load(json_file)
 
 epsilon = data['epsilon']
-
+beta = data['beta']
 
 ###### Clauses #######
 c_pelo = Clause('animal tiene pelo')
@@ -187,9 +189,41 @@ def check(hypothesis, facts):
     return False
 
 
+def get_hypothesis_in_facts(hypothesis, facts):
+    for fact in facts:
+        if hypothesis == fact[0] and abs(fact[1]) > beta:
+            return hypothesis
+    return None
+
+def prove_rule(rule, facts):
+    premise = rule.premise
+    VC = []
+    for clause in premise:
+        fact = get_hypothesis_in_facts(clause, facts)
+        if fact:
+            VC.append(fact[1])
+        else:
+            VC.append(None)
+            break
+    if None not in VC:
+        return min_modified(VC)
+
+    return None
+          
+            
+
+def fact_base(hypothesis, facts, rules):
+    relevant_rules = get_relevant_rules(hypothesis, rules)
+    VC = []
+    for relevant_rule in relevant_rules:
+        vc = prove_rule(relevant_rule, facts)
+        if vc: 
+            VC.append(vc)
+    # aquí discriminar 
+
+
 def demonstrate_hypothesis(hypothesis, facts, rules, current_rule=None):
     #print(f'Checking {hypothesis}')
-    print(current_rule)
     relevant_rules = get_relevant_rules(hypothesis, rules)
     # Ground cases
 
@@ -209,11 +243,34 @@ def demonstrate_hypothesis(hypothesis, facts, rules, current_rule=None):
 
     # Hypotheses are demonstrated recursively
     for rule in relevant_rules:
-        premise = rule.premise
-        f'Certain for {hypothesis}'
-        
+        premise = rule.premise        
         for clause in premise:
             demonstrate_hypothesis(clause, facts, rules, current_rule=rule)
 
+    # Demonstrate the hypothesis if it can be proved
+    prove_rule(rule)
+
+def AEI(hypothesis, facts, rules, current_rule=None):
+    # Checking the base of rules
+    relevant_rules = get_relevant_rules(hypothesis, rules)
+
+    # asks to the user if an hypothesis can not be proved
+    if relevant_rules == []:
+        vc = float(input(f'Certain for {hypothesis}'))
+        # Checking if the vc of the action is greater than epsilon
+        for action in current_rule.conclusion:
+            vc_rule = action[1]
+            if vc_rule >= epsilon:
+                facts.append((hypothesis, vc * vc_rule))
+
+    # Hypotheses are demonstrated recursively
+    for rule in relevant_rules:
+        premise = rule.premise        
+        for clause in premise:
+            AEI(clause, facts, rules, current_rule=rule)
+    return prove_rule(relevant_rules[0], facts)
+
+
+
 demonstrate_hypothesis(perro, facts, rules)
-print(facts)
+#print(facts)
