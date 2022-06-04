@@ -59,4 +59,3 @@ class Facts:
                     # checking if the action can be considered as a rule
                     if abs(action) >= self.epsilon:
                         self.add(action)
-        return None

@@ -1,5 +1,8 @@
+from typing import List
+from model.Hypothesis import Hypothesis
+
 class Rule:
-    def __init__(self, identifier: str, premise, conclusion) -> None:
+    def __init__(self, identifier: str, premise, conclusion: List[Hypothesis]) -> None:
         self.identifier = identifier
         self.premise = premise
         self.conclusion = conclusion
