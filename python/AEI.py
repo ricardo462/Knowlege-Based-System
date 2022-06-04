@@ -139,7 +139,7 @@ hypotheses = [Hypothesis(perro, 0.0),
                 Hypothesis(loro, 0.0)]
 
 to_check = [perro] 
-facts = Facts(beta)
+facts = Facts(beta, epsilon)
 
 
 

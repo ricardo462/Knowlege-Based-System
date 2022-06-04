@@ -2,9 +2,10 @@ from model.Hypothesis import Hypothesis
 from utils import min_modified
 
 class Facts:
-    def __init__(self, beta, facts=[]) -> None:
+    def __init__(self, beta, epsilon, facts=[]) -> None:
         self.facts = facts
         self.beta = beta
+        self.epsilon = epsilon
 
     def __contains__(self, triplet):
         for fact in self.facts:
@@ -48,5 +49,6 @@ class Facts:
         if vc:
             conclusion = rule.prove(vc) 
             for action in conclusion:
-                self.add(action)
+                if abs(action) >= self.epsilon:
+                    self.add(action)
         return None

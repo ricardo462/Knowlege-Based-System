@@ -1,7 +1,7 @@
 class Hypothesis:
     def __init__(self, triplet, certain=0) -> None:
         self.triplet = triplet
-        self.certain = certain
+        self.certain = float(certain)
 
     def __str__(self):
         return 'Hypothesis: ' + str(self.triplet) + f' with {self.certain} certain'
