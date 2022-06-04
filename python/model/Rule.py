@@ -7,9 +7,14 @@ class Rule:
     def __repr__(self) -> str:
         return self.identifier
 
-
     def __str__(self):
-        return f'Rule {self.identifier}:\n\t{str(self.premise)} \n \t\t {str(self.conclusion)}' 
+        return f'Rule {self.identifier}:\n\t{str(self.premise)} \n \t\t {str(self.conclusion)}'
+
+    def __contains__(self, triplet):
+        for action in self.conclusion:
+            if triplet in action:
+                return True
+        return False
 
     def get_vc(self, hypothesis):
         for action in self.conclusion:

@@ -1,4 +1,5 @@
 from model.Hypothesis import Hypothesis
+from model.Rule import Rule
 from utils import min_modified
 
 class Facts:
@@ -23,10 +24,10 @@ class Facts:
     def add(self, fact:Hypothesis):
         self.facts.append(fact)
 
-    def delta_premise(self, vc):
+    def delta_premise(self, vc:float):
         return self.delta/vc
 
-    def get_useful_fact(self, triplet):
+    def get_useful_fact(self, triplet:str):
         for fact in self.facts:
             if triplet in self and abs(fact) > self.beta:
                 return fact
@@ -48,8 +49,7 @@ class Facts:
 
         return None
 
-
-    def prove_rule(self, rule):
+    def prove_rule(self, rule:Rule):
         vc = self.get_vc_premise(rule)
         if vc:
             # checking the delta value

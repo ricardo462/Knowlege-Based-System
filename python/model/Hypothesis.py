@@ -6,6 +6,9 @@ class Hypothesis:
     def __str__(self):
         return 'Hypothesis: ' + str(self.triplet) + f' with {self.certain} certain'
 
+    def __repr__(self):
+        return 'Hypothesis: ' + str(self.triplet) + f' with {self.certain} certain'
+
     def __contains__(self, item):
         if item == self.triplet:
             return True

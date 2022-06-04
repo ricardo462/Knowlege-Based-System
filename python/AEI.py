@@ -3,6 +3,7 @@ import json
 from model.Rule import Rule
 from model.Hypothesis import Hypothesis
 from model.Facts import Facts
+from model.Rules import Rules
 from utils import *
 
 PARAMETERS_PAHT = 'python/parameters.json'
@@ -195,6 +196,16 @@ def AEI(hypothesis, facts, rules, current_rule=None):
 #AEI(perro, facts, rules)
 #print(facts)
 
-facts.add(Hypothesis(pelo, 0.43))
-facts.prove_rule(R1)
-print(facts)
+
+def AEI_(triplet, facts:Facts, rules, current_rule=None):
+    # checking only if there is a rule for check
+    if current_rule:
+        return facts.prove_rule(current_rule)
+    
+    # checking rules recursively
+    relevant_rules = None
+
+#print(AEI_(perro, facts, rules))
+
+rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
+print(rules_.get_relevant_rules(mamifero))
