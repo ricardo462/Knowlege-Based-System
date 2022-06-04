@@ -2,9 +2,10 @@ from model.Hypothesis import Hypothesis
 from utils import min_modified
 
 class Facts:
-    def __init__(self, beta, epsilon, facts=[]) -> None:
+    def __init__(self, beta, delta, epsilon, facts=[]) -> None:
         self.facts = facts
         self.beta = beta
+        self.delta = delta
         self.epsilon = epsilon
 
     def __contains__(self, triplet):
@@ -21,6 +22,9 @@ class Facts:
 
     def add(self, fact:Hypothesis):
         self.facts.append(fact)
+
+    def delta_premise(self, vc):
+        return self.delta/vc
 
     def get_useful_fact(self, triplet):
         for fact in self.facts:
@@ -44,11 +48,15 @@ class Facts:
 
         return None
 
+
     def prove_rule(self, rule):
         vc = self.get_vc_premise(rule)
         if vc:
-            conclusion = rule.prove(vc) 
-            for action in conclusion:
-                if abs(action) >= self.epsilon:
-                    self.add(action)
+            # checking the delta value
+            if abs(vc) >= self.delta_premise(vc):
+                conclusion = rule.prove(vc) 
+                for action in conclusion:
+                    # checking if the action can be considered as a rule
+                    if abs(action) >= self.epsilon:
+                        self.add(action)
         return None

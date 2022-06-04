@@ -13,6 +13,7 @@ with open(PARAMETERS_PAHT) as json_file:
 
 epsilon = data['epsilon']
 beta = data['beta']
+delta = data['delta']
 
 ##### Rules #####
 pelo = 'animal tiene pelo'
@@ -139,7 +140,7 @@ hypotheses = [Hypothesis(perro, 0.0),
                 Hypothesis(loro, 0.0)]
 
 to_check = [perro] 
-facts = Facts(beta, epsilon)
+facts = Facts(beta, delta, epsilon)
 
 
 
@@ -194,6 +195,6 @@ def AEI(hypothesis, facts, rules, current_rule=None):
 #AEI(perro, facts, rules)
 #print(facts)
 
-facts.add(Hypothesis(pelo, 1))
+facts.add(Hypothesis(pelo, 0.43))
 facts.prove_rule(R1)
 print(facts)
