@@ -20,21 +20,6 @@ class Facts:
         for fact in self.facts:
             text += f'\n\t{str(fact)}'
         return text
-    
-    """
-    def add(self, fact:Hypothesis):
-        # I didn't do an if else clause where wether the fact is in the list
-        # beacause that implies that it has to do the same validation twice
-        is_in = False
- 
-        for index, fact_ in enumerate(self.facts):
-            if fact == fact_:
-                self.facts[index].set_vc(max_modified([fact.certain, fact_.certain]))
-                is_in = True
-     
-        if not is_in:
-            self.facts.append(fact)
-    """
 
     def add(self, fact:Hypothesis) -> None:
         if fact.triplet in self:
@@ -76,21 +61,6 @@ class Facts:
                 return None
 
         return min_modified(VC)
-        """
-        for clause in premise:
-            fact = self.get_useful_fact(clause)
-            if fact:
-                VC.append(fact.certain)
-            else:
-                VC.append(None)
-                break
-        print(VC)
-        if None not in VC:
-            return min_modified(VC)
-
-        """
-
-        return None
 
     def prove_rule(self, rule:Rule):
         vc = self.get_vc_premise(rule)
