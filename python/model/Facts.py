@@ -1,6 +1,6 @@
 from model.Hypothesis import Hypothesis
 from model.Rule import Rule
-from utils import min_modified
+from utils import min_modified, max_modified
 
 class Facts:
     def __init__(self, beta, delta, epsilon, facts=[]) -> None:
@@ -20,9 +20,31 @@ class Facts:
         for fact in self.facts:
             text += f'\n\t{str(fact)}'
         return text
-
+    
+    """
     def add(self, fact:Hypothesis):
-        self.facts.append(fact)
+        # I didn't do an if else clause where wether the fact is in the list
+        # beacause that implies that it has to do the same validation twice
+        is_in = False
+ 
+        for index, fact_ in enumerate(self.facts):
+            if fact == fact_:
+                self.facts[index].set_vc(max_modified([fact.certain, fact_.certain]))
+                is_in = True
+     
+        if not is_in:
+            self.facts.append(fact)
+    """
+
+    def add(self, fact:Hypothesis) -> None:
+        if fact.triplet in self:
+            for index, fact_ in enumerate(self.facts):
+                if fact == fact_:
+                    self.facts[index].set_vc(max_modified([fact.certain, fact_.certain])) 
+        
+        else:
+            print('ingresando')
+            self.facts.append(fact)
 
     def delta_premise(self, vc:float):
         return self.delta/vc
