@@ -141,63 +141,11 @@ hypotheses = [Hypothesis(perro, 0.0),
                 Hypothesis(loro, 0.0)]
 
 to_check = [perro] 
-facts = Facts(beta, delta, epsilon)
 
-
-
-def check_fact_base(rule, facts):
-    premise = rule.premise
-    VC = []
-    for clause in premise:
-        fact = facts.get_useful_fact(clause, facts)
-        if fact:
-            VC.append(fact.certain)
-        else:
-            VC.append(None)
-            break
-    if None not in VC:
-        return min_modified(VC)
-
-    return None
-
-
-def question_rule_base():
-    pass
-
-def ask_user():
-    pass
-
-
-def AEI(hypothesis, facts, rules, current_rule=None):
-    if current_rule:
-        vc = check_fact_base(current_rule, facts)
-        if vc:
-            facts.append([hypothesis, vc])
-            return
-
-    relevant_rules = get_relevant_rules(hypothesis, rules)
-    # asks to the user if an hypothesis can not be proved
-    if relevant_rules == []:
-        vc = float(input(f'Certain for {hypothesis}: '))
-        # Checking if the vc of the action is greater than epsilon
-        for action in current_rule.conclusion:
-            vc_rule = action[1]
-            if vc_rule >= epsilon:
-                facts.append((hypothesis, vc * vc_rule))
-
-    # Hypotheses are demonstrated recursively
-    for rule in relevant_rules:
-        premise = rule.premise        
-        for clause in premise:
-            AEI(clause, facts, rules, current_rule=rule)
-
-    vc = check_fact_base(current_rule, facts)
-
-#AEI(perro, facts, rules)
-#print(facts)
 
 
 def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
+    print(f'Demonstrating {current_rule.__repr__()}')
     # checking only if there is a rule for check
     if current_rule:
         facts.prove_rule(current_rule)
@@ -209,17 +157,28 @@ def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
             AEI_(action, facts, rules, rule)
 
     # asking to the user if the hypothesis can not be proven
-    if relevant_rules == []:
+    if relevant_rules == [] and triplet not in facts:
         certain = float(input(f'Certain for {triplet}: '))
         facts.add(Hypothesis(triplet, certain))
 
     # checking the rules
+    """
     else:
         for rule in relevant_rules:
+            #print('----------------------------------')
+            #print(facts)
+            #print(f'Checking rule {rule} \n')
             facts.prove_rule(rule)
+            #print(facts)
+
+    """
 
 rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
+#rules_ = Rules(R1, R14)
 
-
+facts = Facts(beta, delta, epsilon)
+AEI_(perro, facts, rules_)
 AEI_(perro, facts, rules_)
 print(facts)
+#facts.add(Hypothesis(vuela_bien))
+#print(vuela_bien in facts)

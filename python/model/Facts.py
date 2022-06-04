@@ -43,7 +43,6 @@ class Facts:
                     self.facts[index].set_vc(max_modified([fact.certain, fact_.certain])) 
         
         else:
-            print('ingresando')
             self.facts.append(fact)
 
     def delta_premise(self, vc:float):
@@ -55,10 +54,29 @@ class Facts:
                 return fact
         return None
 
+    # Esto se puede hacer más bonito, pero debería funcionar
+    def get_vc_hypothesis(self, triplet):
+        if triplet in self:
+            for fact in self.facts:
+                if triplet == fact.triplet:
+                    return fact.certain
+        else:
+            print('no está')
+            return 0.0
+
     #esto retorna el mínimo vc de las clausulas para comprobar una regla
     def get_vc_premise(self, rule):
         premise = rule.premise
         VC = []
+        for clause in premise:
+            vc = self.get_vc_hypothesis(clause)
+            if vc != 0.0:
+                VC.append(vc)
+            else:
+                return None
+
+        return min_modified(VC)
+        """
         for clause in premise:
             fact = self.get_useful_fact(clause)
             if fact:
@@ -66,13 +84,17 @@ class Facts:
             else:
                 VC.append(None)
                 break
+        print(VC)
         if None not in VC:
             return min_modified(VC)
+
+        """
 
         return None
 
     def prove_rule(self, rule:Rule):
         vc = self.get_vc_premise(rule)
+        print(f'{rule.__repr__()}: {vc}')
         if vc:
             # checking the delta value
             if abs(vc) >= self.delta_premise(vc):
