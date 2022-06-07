@@ -1,11 +1,13 @@
+from typing import List
 from model.Hypothesis import Hypothesis
 from model.Rule import Rule
 from utils import min_modified, max_modified
 
 class Facts:
-    def __init__(self, beta, delta, epsilon, high_level_hypotheses=None, facts=[]) -> None:
+    def __init__(self, alpha, beta, delta, epsilon, high_level_hypotheses=None, facts=[]) -> None:
         self.facts = facts
         self.high_level_hypotheses = high_level_hypotheses
+        self.alpha = alpha
         self.beta = beta
         self.delta = delta
         self.epsilon = epsilon
@@ -73,7 +75,7 @@ class Facts:
                     if abs(action) >= self.epsilon:
                         self.add(action)
 
-    def get_high_level_facts(self):
+    def get_high_level_facts(self) -> List[Hypothesis]:
         high_level_facts = []
         
         for high_level_hypothesis in self.high_level_hypotheses:
@@ -86,7 +88,7 @@ class Facts:
     
     
     def get_conclusive_high_level_premise(self) -> Hypothesis:
-        """
-        Returns if there is a high
-        """
-        pass
+        high_level_facts = self.get_high_level_facts()
+        for fact in high_level_facts:
+            if fact.certain >= self.alpha:
+                return fact
