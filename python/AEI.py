@@ -139,16 +139,15 @@ hypotheses = [Hypothesis(perro, 0.0),
                 Hypothesis(loro, 0.0)]
 
 def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
-    print(f'Demonstrating {current_rule.__repr__()}')
-    # checking only if there is a rule for check
-    if current_rule:
-        facts.prove_rule(current_rule)
-    
     # checking rules recursively
     relevant_rules = rules.get_relevant_rules(triplet)
+
+    for rule in relevant_rules:
+        facts.prove_rule(rule)
+
     for rule in relevant_rules:
         for action in rule.premise:
-            AEI_(action, facts, rules, rule)
+            AEI_(action, facts, rules)
 
     # asking to the user if the hypothesis can not be proven
     if relevant_rules == [] and triplet not in facts:
@@ -157,8 +156,13 @@ def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
 
 
 rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
+high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tortuga, cheetah, gaviota, avestruz, loro]
 
-facts = Facts(beta, delta, epsilon)
-AEI_(perro, facts, rules_)
-AEI_(perro, facts, rules_)
+facts = Facts(beta, delta, epsilon, high_level_hypotheses)
+
+for h in high_level_hypotheses:
+    AEI_(h, facts, rules_)
+    AEI_(h, facts, rules_)
+    AEI_(h, facts, rules_)
 print(facts)
+print(facts.get_high_level_facts())

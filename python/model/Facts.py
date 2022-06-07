@@ -3,8 +3,9 @@ from model.Rule import Rule
 from utils import min_modified, max_modified
 
 class Facts:
-    def __init__(self, beta, delta, epsilon, facts=[]) -> None:
+    def __init__(self, beta, delta, epsilon, high_level_hypotheses=None, facts=[]) -> None:
         self.facts = facts
+        self.high_level_hypotheses = high_level_hypotheses
         self.beta = beta
         self.delta = delta
         self.epsilon = epsilon
@@ -46,7 +47,6 @@ class Facts:
                 if triplet == fact.triplet:
                     return fact.certain
         else:
-            print('no está')
             return 0.0
 
     #esto retorna el mínimo vc de las clausulas para comprobar una regla
@@ -64,7 +64,6 @@ class Facts:
 
     def prove_rule(self, rule:Rule):
         vc = self.get_vc_premise(rule)
-        print(f'{rule.__repr__()}: {vc}')
         if vc:
             # checking the delta value
             if abs(vc) >= self.delta_premise(vc):
@@ -73,3 +72,21 @@ class Facts:
                     # checking if the action can be considered as a rule
                     if abs(action) >= self.epsilon:
                         self.add(action)
+
+    def get_high_level_facts(self):
+        high_level_facts = []
+        
+        for high_level_hypothesis in self.high_level_hypotheses:
+            if high_level_hypothesis in self:
+                high_level_facts.append((high_level_hypothesis, 
+                round(self.get_vc_hypothesis(high_level_hypothesis), 2)))
+
+        return high_level_facts
+
+    
+    
+    def get_conclusive_high_level_premise(self) -> Hypothesis:
+        """
+        Returns if there is a high
+        """
+        pass
