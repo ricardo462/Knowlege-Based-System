@@ -12,7 +12,7 @@ class Greeting(tk.Frame):
         ttk.Label(frm, text='Dog, Bat, Tiger, Elephant, Zebra, Giraffe, Turttle, Cheetah, Seagull, Ostrich, Parrot').grid(column=0, row=2)
         ttk.Label(frm, text='Ready?:').grid(column=0, row=3)
         ttk.Button(frm, text='Ready', command=frm.destroy).grid(column=0, row=4)
-
-root = tk.Tk()
-myapp = Greeting(root)
-myapp.mainloop()
+if __name__ == '__name__':
+    root = tk.Tk()
+    myapp = Greeting(root)
+    myapp.mainloop()
