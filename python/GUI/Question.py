@@ -22,7 +22,8 @@ class Question(tk.Frame):
         ### Confirmation ###
         ttk.Button(frm, text='Next Question', command=frm.destroy).grid(column=0, row=2)
 
-root = tk.Tk()
-root.title('knowlege Based System')
-myapp = Question(root, 'The animal that you are thinking of has hair?')
-myapp.mainloop()
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.title('knowlege Based System')
+    myapp = Question(root, 'The animal that you are thinking of has hair?')
+    myapp.mainloop()
