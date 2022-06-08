@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 from model.Rule import Rule
 from model.Hypothesis import Hypothesis
@@ -161,11 +162,30 @@ high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tor
 
 facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
 
-for h in high_level_hypotheses:
-    AEI_(h, facts, rules_)
-    AEI_(h, facts, rules_)
-    AEI_(h, facts, rules_)
-    if facts.get_conclusive_high_level_premise:
-        break
-print(facts)
-print(facts.get_high_level_facts())
+if __name__ == '__main__':
+    for h in high_level_hypotheses:
+        AEI_(h, facts, rules_)
+        AEI_(h, facts, rules_)
+        AEI_(h, facts, rules_)
+        if facts.get_conclusive_high_level_premise:
+            break
+    print(facts)
+    print(facts.get_high_level_facts())
+
+
+class AEI:
+    def __init__(self, alpha, beta, gamma, delta, epsilon, rules: Rules, high_level_hypotheses: List[str], facts: Facts) -> None:
+        ### Parameters ###
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+        self.delta = delta
+        self.epsilon = epsilon
+        
+        ### Global variables ###
+        self.rules = rules 
+        self. high_level_hipotheses = high_level_hypotheses
+        self.facts = facts
+
+
+    
