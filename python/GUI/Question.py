@@ -3,9 +3,12 @@ from tkinter import ttk
 
 
 class Question(tk.Frame):
-    def __init__(self, master, question, number=1):
+    def __init__(self, master, question, controller, number=1):
         super().__init__(master)
         self.root = master
+        self.controller = controller
+
+
         frm = ttk.Frame(self.root, padding=10)
         frm.grid()
         ### Question ###
@@ -21,6 +24,9 @@ class Question(tk.Frame):
 
         ### Confirmation ###
         ttk.Button(frm, text='Next Question', command=frm.destroy).grid(column=0, row=2)
+
+    def send_answer(self, answer) -> None:
+        self.controller.receive_anser(answer)
 
 if __name__ == '__main__':
     root = tk.Tk()

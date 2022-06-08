@@ -1,5 +1,6 @@
 import json
 from typing import List
+import time
 
 from model.Rule import Rule
 from model.Hypothesis import Hypothesis
@@ -140,7 +141,13 @@ hypotheses = [Hypothesis(perro, 0.0),
                 Hypothesis(avestruz, 0.0), 
                 Hypothesis(loro, 0.0)]
 
-def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
+rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
+high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tortuga, cheetah, gaviota, avestruz, loro]
+
+facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+
+
+def AEI__(triplet, facts:Facts, rules:Rules, current_rule=None):
     # checking rules recursively
     relevant_rules = rules.get_relevant_rules(triplet)
 
@@ -149,7 +156,7 @@ def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
 
     for rule in relevant_rules:
         for action in rule.premise:
-            AEI_(action, facts, rules)
+            AEI__(action, facts, rules)
 
     # asking to the user if the hypothesis can not be proven
     if relevant_rules == [] and triplet not in facts:
@@ -157,16 +164,11 @@ def AEI_(triplet, facts:Facts, rules:Rules, current_rule=None):
         facts.add(Hypothesis(triplet, certain))
 
 
-rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
-high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tortuga, cheetah, gaviota, avestruz, loro]
-
-facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
-
 if __name__ == '__main__':
     for h in high_level_hypotheses:
-        AEI_(h, facts, rules_)
-        AEI_(h, facts, rules_)
-        AEI_(h, facts, rules_)
+        AEI__(h, facts, rules_)
+        AEI__(h, facts, rules_)
+        AEI__(h, facts, rules_)
         if facts.get_conclusive_high_level_premise:
             break
     print(facts)
@@ -174,18 +176,43 @@ if __name__ == '__main__':
 
 
 class AEI:
-    def __init__(self, alpha, beta, gamma, delta, epsilon, rules: Rules, high_level_hypotheses: List[str], facts: Facts) -> None:
-        ### Parameters ###
-        self.alpha = alpha
-        self.beta = beta
-        self.gamma = gamma
-        self.delta = delta
-        self.epsilon = epsilon
-        
+    def __init__(self, alpha, beta, gamma, delta, epsilon, rules: Rules, high_level_hypotheses: List[str]) -> None:
         ### Global variables ###
         self.rules = rules 
-        self. high_level_hipotheses = high_level_hypotheses
-        self.facts = facts
+        self.facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+        
+        ### Controller ###
+        self.controller = None
+
+    def AEI_(self, triplet, facts:Facts, rules:Rules):
+        # checking rules recursively
+        relevant_rules = self.rules.get_relevant_rules(triplet)
+
+        for rule in relevant_rules:
+            facts.prove_rule(rule)
+
+        for rule in relevant_rules:
+            for action in rule.premise:
+                self.AEI_(action, self.facts, self.rules)
+
+        # asking to the user if the hypothesis can not be proven
+        if relevant_rules == [] and triplet not in facts:
+            certain = self.ask(f'Certain for {triplet}? ')
+            facts.add(Hypothesis(triplet, certain))
+
+    def run(self):
+        self.AEI_(perro, self.facts, self.rules)
 
 
-    
+    def ask(self, question):
+        self.controller.make_question(question) 
+
+        answer = self.controller.get_answer()
+        
+        while answer == None:
+            answer = self.controller.get_answer()
+
+        return answer
+
+    def set_controller(self, controller):
+        self.controller = controller

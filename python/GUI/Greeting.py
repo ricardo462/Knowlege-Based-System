@@ -18,7 +18,7 @@ class Greeting(tk.Frame):
 
     def destroy_greeting(self):
         self.frm.destroy()
-        self.controller.ask()
+        self.controller.run()
 
 
 if __name__ == '__name__':
