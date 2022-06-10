@@ -90,5 +90,5 @@ class Facts:
     def get_conclusive_high_level_premise(self) -> Hypothesis:
         high_level_facts = self.get_high_level_facts()
         for fact in high_level_facts:
-            if fact.certain >= self.alpha:
+            if fact[1] >= self.alpha:
                 return fact

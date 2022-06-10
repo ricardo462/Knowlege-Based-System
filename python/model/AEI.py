@@ -1,6 +1,5 @@
 import json
 from typing import List
-import time
 
 from model.Rule import Rule
 from model.Hypothesis import Hypothesis
@@ -180,6 +179,7 @@ class AEI:
         ### Global variables ###
         self.rules = rules 
         self.facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+        self.high_level_hypotheses = high_level_hypotheses
         
         ### Controller ###
         self.controller = None
@@ -202,7 +202,19 @@ class AEI:
             facts.add(Hypothesis(triplet, certain))
 
     def run(self):
-        self.AEI_(perro, self.facts, self.rules)
+        for triplet in self.high_level_hypotheses:
+            self.AEI_(triplet, self.facts, self.rules)
+            self.AEI_(triplet, self.facts, self.rules)
+            self.AEI_(triplet, self.facts, self.rules)
+            
+            conclusive_hypotheses = self.facts.get_conclusive_high_level_premise()
+
+            if conclusive_hypotheses:
+                print (conclusive_hypotheses)
+                return conclusive_hypotheses
+        
+        
+
 
 
     def ask(self, question):
