@@ -19,14 +19,23 @@ class Question(tk.Frame):
         bar_frm.grid()
         bar_frm.grid(column=0, row=1)
         ttk.Label(bar_frm, text='No').grid(column=0, row=0)
-        ttk.Scale(bar_frm, value=0.5).grid(column=1, row=0)
+        self.scale = ttk.Scale(bar_frm, value=0.5)
+        self.scale.grid(column=1, row=0)
         ttk.Label(bar_frm, text='Yes').grid(column=2, row=0)
 
         ### Confirmation ###
-        ttk.Button(frm, text='Next Question', command=frm.destroy).grid(column=0, row=2)
+        ttk.Button(frm, text='Next Question', command=self.destroy_question).grid(column=0, row=2)
+
+        self.frm = frm
+        
 
     def send_answer(self, answer) -> None:
-        self.controller.receive_anser(answer)
+        self.controller.receive_answer(answer)
+
+    def destroy_question(self):
+        self.send_answer(self.scale.get())
+        self.frm.quit()
+        self.frm.destroy()
 
 if __name__ == '__main__':
     root = tk.Tk()

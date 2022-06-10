@@ -8,12 +8,13 @@ class Controller:
         self.current_answer = None
         
     def make_greeting(self):
-        Greeting(self.root, self)
+        Greeting(self.root, self).mainloop()
 
     def make_question(self, question):
         Question(self.root, question, self).mainloop()
-
-    def receive_anser(self, answer):
+        
+        
+    def receive_answer(self, answer):
         self.current_answer = answer
 
     def get_answer(self):

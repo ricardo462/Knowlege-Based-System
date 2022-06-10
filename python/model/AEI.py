@@ -198,6 +198,7 @@ class AEI:
         # asking to the user if the hypothesis can not be proven
         if relevant_rules == [] and triplet not in facts:
             certain = self.ask(f'Certain for {triplet}? ')
+            print(certain)
             facts.add(Hypothesis(triplet, certain))
 
     def run(self):
@@ -205,7 +206,7 @@ class AEI:
 
 
     def ask(self, question):
-        self.controller.make_question(question) 
+        self.controller.make_question(question)
 
         answer = self.controller.get_answer()
         
@@ -213,6 +214,7 @@ class AEI:
             answer = self.controller.get_answer()
 
         return answer
+        
 
     def set_controller(self, controller):
         self.controller = controller
