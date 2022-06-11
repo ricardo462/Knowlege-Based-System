@@ -16,7 +16,12 @@ class Result(tk.Frame):
         ttk.Label(frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
 
         ### Image ###
-        image = Image.open(image_path)
+        dir = os.path.abspath(__file__)
+        dname = os.path.dirname(dir)
+        dname = os.path.dirname(dname)
+        dname = os.path.dirname(dname)
+        image_path = '/resources/' + image_path
+        image = Image.open(dname + image_path)
         #print(image.size)
         resized_image = image.resize((400, 205))
         test = ImageTk.PhotoImage(resized_image)
