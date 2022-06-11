@@ -212,6 +212,7 @@ class AEI:
             if conclusive_hypotheses:
                 print (conclusive_hypotheses)
                 return conclusive_hypotheses
+        print(self.facts.get_high_level_facts())
         
         
 
