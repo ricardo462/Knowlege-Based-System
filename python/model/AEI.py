@@ -231,3 +231,6 @@ class AEI:
 
     def set_controller(self, controller):
         self.controller = controller
+
+    def reset(self):
+        self.facts.reset()

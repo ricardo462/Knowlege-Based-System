@@ -7,10 +7,11 @@ from numpy import size
 
 
 class Result(tk.Frame):
-    def __init__(self, master, animal, image_path):
+    def __init__(self, master, animal, image_path, controller):
         super().__init__(master)
-        self.root = master
-        frm = ttk.Frame(self.root, padding=10)
+        self.controller = controller 
+
+        frm = ttk.Frame(master, padding=10)
         frm.grid()
         ### Result ###
         ttk.Label(frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
@@ -36,8 +37,12 @@ class Result(tk.Frame):
         bttn_frm = ttk.Frame(frm, padding=10)
         bttn_frm.grid()
         bttn_frm.grid(column=0, row=2)
-        ttk.Button(bttn_frm, text='Try again', command=frm.destroy).grid(column=0, row=0)
-        ttk.Button(bttn_frm, text='Close', command=frm.destroy).grid(column=1, row=0)
+        ttk.Button(bttn_frm, text='Try again', command=self.try_again).grid(column=0, row=0)
+        ttk.Button(bttn_frm, text='Close', command=master.destroy).grid(column=1, row=0)
+
+    def try_again(self):
+        self.controller.try_again()    
+
 
 if __name__ == '__main__':
     dir = os.path.abspath(__file__)

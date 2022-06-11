@@ -95,3 +95,6 @@ class Facts:
                 conclusive_premises.append(fact)
 
         return conclusive_premises
+
+    def reset(self):
+        self.facts = []

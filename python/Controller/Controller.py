@@ -1,6 +1,7 @@
 from GUI.Greeting import Greeting
 from GUI.Question import Question
 from GUI.Result import Result
+import tkinter as tk
 
 class Controller:
     def __init__(self, model, master, images) -> None:
@@ -19,7 +20,7 @@ class Controller:
 
     def make_results(self):
         for result in self.results:
-            Result(self.root, result, self.images[result[0]])
+            Result(self.root, result, self.images[result[0]], self)
         
     def receive_answer(self, answer):
         self.current_answer = answer
@@ -29,3 +30,9 @@ class Controller:
 
     def run(self):
         self.results = self.model.run()
+
+    def try_again(self):
+        self.model.reset()
+        self.root.destroy()
+        self.root = tk.Tk()
+        self.make_greeting()
