@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     alpha = data['alpha']
     beta = data['beta']
+    gamma = data['gamma']
     delta = data['delta']
     epsilon = data['epsilon']
 
@@ -148,9 +149,9 @@ if __name__ == '__main__':
 
 
 
-    model = AEI(alpha, beta, None, delta, epsilon, rules_, high_level_hypotheses)
+    model = AEI(alpha, beta, gamma, delta, epsilon, rules_, high_level_hypotheses)
     
     root = tk.Tk()
     controller = Controller(model, root, images)
-    controller.make_greeting()
+    controller.make_greeting(alpha, beta, gamma, epsilon, delta)
     root.mainloop()

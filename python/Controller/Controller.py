@@ -12,8 +12,8 @@ class Controller:
         self.current_answer = None
         self.results = None
         
-    def make_greeting(self):
-        Greeting(self.root, self).mainloop()
+    def make_greeting(self, alpha, beta, gamma, epsilon, delta):
+        Greeting(self.root, self, alpha, beta, gamma, epsilon, delta).mainloop()
 
     def make_question(self, question):
         Question(self.root, question, self).mainloop()
