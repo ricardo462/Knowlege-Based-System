@@ -145,13 +145,13 @@ if __name__ == '__main__':
     rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
     high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tortuga, cheetah, gaviota, avestruz, loro]
 
-    facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+    facts = Facts(alpha, beta, gamma, delta, epsilon, True, high_level_hypotheses)
 
 
 
-    model = AEI(alpha, beta, gamma, delta, epsilon, rules_, high_level_hypotheses)
+    model = AEI(alpha, beta, gamma, delta, epsilon, True, rules_, high_level_hypotheses)
     
     root = tk.Tk()
     controller = Controller(model, root, images)
-    controller.make_greeting(alpha, beta, gamma, epsilon, delta)
+    controller.make_greeting(alpha, beta, gamma, delta, epsilon)
     root.mainloop()

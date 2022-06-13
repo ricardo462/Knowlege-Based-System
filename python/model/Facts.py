@@ -4,13 +4,15 @@ from model.Rule import Rule
 from utils import min_modified, max_modified
 
 class Facts:
-    def __init__(self, alpha, beta, delta, epsilon, high_level_hypotheses=None, facts=[]) -> None:
+    def __init__(self, alpha, beta, gamma, delta, epsilon, early_stopping, high_level_hypotheses=None, facts=[]) -> None:
         self.facts = facts
         self.high_level_hypotheses = high_level_hypotheses
         self.alpha = alpha
         self.beta = beta
+        self.gamma = gamma
         self.delta = delta
         self.epsilon = epsilon
+        self.early_stopping = early_stopping
 
     def __contains__(self, triplet):
         for fact in self.facts:
@@ -98,3 +100,16 @@ class Facts:
 
     def reset(self):
         self.facts = []
+
+
+    def set_parameters(self, alpha, beta, gamma, delta, epsilon, early_stopping):
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+        self.delta = delta
+        self.epsilon = epsilon
+        self.early_stopping = early_stopping
+
+    def get_parameters(self):
+        return [self.alpha, self.beta, self.gamma, self.delta, self.epsilon]
+        

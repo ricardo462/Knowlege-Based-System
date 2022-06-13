@@ -17,6 +17,7 @@ alpha = data['alpha']
 beta = data['beta']
 delta = data['delta']
 epsilon = data['epsilon']
+gamma = data['gamma']
 
 ##### Rules #####
 pelo = 'animal tiene pelo'
@@ -143,7 +144,7 @@ hypotheses = [Hypothesis(perro, 0.0),
 rules_ = Rules(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22)
 high_level_hypotheses = [perro, murcielago, tigre , elefante, cebra, jirafa, tortuga, cheetah, gaviota, avestruz, loro]
 
-facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+facts = Facts(alpha, beta, gamma, delta, epsilon, True, high_level_hypotheses)
 
 
 def AEI__(triplet, facts:Facts, rules:Rules, current_rule=None):
@@ -175,10 +176,10 @@ if __name__ == '__main__':
 
 
 class AEI:
-    def __init__(self, alpha, beta, gamma, delta, epsilon, rules: Rules, high_level_hypotheses: List[str]) -> None:
+    def __init__(self, alpha, beta, gamma, delta, epsilon, early_stopping, rules: Rules, high_level_hypotheses: List[str]) -> None:
         ### Global variables ###
         self.rules = rules 
-        self.facts = Facts(alpha, beta, delta, epsilon, high_level_hypotheses)
+        self.facts = Facts(alpha, beta, gamma, delta, epsilon, early_stopping, high_level_hypotheses)
         self.high_level_hypotheses = high_level_hypotheses
         
         ### Controller ###
@@ -234,3 +235,9 @@ class AEI:
 
     def reset(self):
         self.facts.reset()
+
+    def set_parameters(self, alpha, beta, gamma, delta, epsilon, early_stopping):
+        self.facts.set_parameters(alpha, beta, gamma, delta, epsilon, early_stopping)
+
+    def get_parameters(self):
+        return self.facts.get_parameters()

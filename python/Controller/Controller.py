@@ -12,8 +12,8 @@ class Controller:
         self.current_answer = None
         self.results = None
         
-    def make_greeting(self, alpha, beta, gamma, epsilon, delta):
-        Greeting(self.root, self, alpha, beta, gamma, epsilon, delta).mainloop()
+    def make_greeting(self, alpha, beta, gamma, delta, epsilon):
+        Greeting(self.root, self, alpha, beta, gamma, delta, epsilon).mainloop()
 
     def make_question(self, question):
         Question(self.root, question, self).mainloop()
@@ -35,4 +35,8 @@ class Controller:
         self.model.reset()
         self.root.destroy()
         self.root = tk.Tk()
-        self.make_greeting()
+        print(self.model.get_parameters())
+        self.make_greeting(*self.model.get_parameters())
+
+    def set_parameters(self, alpha, beta, gamma, delta, epsilon, early_stopping):
+        self.model.set_parameters(alpha, beta, gamma, delta, epsilon, early_stopping)
