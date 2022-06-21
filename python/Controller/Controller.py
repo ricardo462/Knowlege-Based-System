@@ -35,7 +35,6 @@ class Controller:
         self.model.reset()
         self.root.destroy()
         self.root = tk.Tk()
-        print(self.model.get_parameters())
         self.make_greeting(*self.model.get_parameters())
 
     def set_parameters(self, alpha, beta, gamma, delta, epsilon, early_stopping):

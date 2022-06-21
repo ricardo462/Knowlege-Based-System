@@ -3,8 +3,6 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import os
 
-from numpy import size
-
 
 class Result(tk.Frame):
     def __init__(self, master, animal, image_path, controller):
