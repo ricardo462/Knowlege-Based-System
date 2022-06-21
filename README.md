@@ -100,7 +100,7 @@ enough certainty to not require more effort to improve your grade
 of certainty.
 
 - delta: parameter to determine when a premise has a degree of certainty
-Enough to trigger a rule. delta(rule) \in [beta , beta/epsilon].
+Enough to trigger a rule. $delta(rule) \in [beta , beta/epsilon]$.
 
 - epsilon: parameter to determine when a rule has a degree of certainty
 enough to infer a given hypothesis (or intermediate conclusion),
