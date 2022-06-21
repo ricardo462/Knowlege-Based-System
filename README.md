@@ -106,5 +106,7 @@ Enough to trigger a rule. $\delta(rule) \in [\beta , \beta/\epsilon]$.
 enough to infer a given hypothesis (or intermediate conclusion),
 assuming the premise is fully satisfied.
 
+- Early Stopping: parameter that sets if the system uses the $\alpha$ condition.
+
 After setting the parameters, the system is going to ask you questions about the animal that you are thinking about. Finally,
 after answering all the necessary questions, a final view with the conclusions is displayed. 
