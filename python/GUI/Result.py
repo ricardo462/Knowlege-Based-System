@@ -5,31 +5,32 @@ import os
 
 
 class Result(tk.Frame):
-    def __init__(self, master, animal, image_path, controller):
+    def __init__(self, master, animals, image_path, controller):
         super().__init__(master)
         self.controller = controller 
 
         frm = ttk.Frame(master, padding=10)
         frm.grid()
-        ### Result ###
-        ttk.Label(frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
 
-        ### Image ###
-        dir = os.path.abspath(__file__)
-        dname = os.path.dirname(dir)
-        dname = os.path.dirname(dname)
-        dname = os.path.dirname(dname)
-        image_path = '/resources/' + image_path
-        image = Image.open(dname + image_path)
-        #print(image.size)
-        resized_image = image.resize((400, 205))
-        test = ImageTk.PhotoImage(resized_image)
+        for idx, animal in enumerate(animals):
+            ### Result ###
+            ttk.Label(frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
 
-        label = ttk.Label(frm, image=test)
-        label.image = test
+            ### Image ###
+            dir = os.path.abspath(__file__)
+            dname = os.path.dirname(dir)
+            dname = os.path.dirname(dname)
+            dname = os.path.dirname(dname)
+            image_path = '/resources/' + image_path[idx]
+            image = Image.open(dname + image_path)
+            resized_image = image.resize((400, 205))
+            test = ImageTk.PhotoImage(resized_image)
 
-        # Position image
-        label.grid(column=0, row=1)
+            label = ttk.Label(frm, image=test)
+            label.image = test
+
+            # Position image
+            label.grid(column=0, row=idx)
 
         ### Next step ###
         bttn_frm = ttk.Frame(frm, padding=10)

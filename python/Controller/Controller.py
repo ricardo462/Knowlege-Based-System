@@ -19,8 +19,8 @@ class Controller:
         Question(self.root, question, self).mainloop()
 
     def make_results(self):
-        for result in self.results:
-            Result(self.root, result, self.images[result[0]], self)
+        images = [self.images[result[0]] for result in self.results]
+        Result(self.root, self.results, images, self)
         
     def receive_answer(self, answer):
         self.current_answer = answer
