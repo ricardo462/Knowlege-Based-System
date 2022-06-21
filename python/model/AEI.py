@@ -194,7 +194,8 @@ class AEI:
 
         for rule in relevant_rules:
             for action in rule.premise:
-                self.AEI_(action, self.facts, self.rules)
+                if facts.improvable(action):
+                    self.AEI_(action, self.facts, self.rules)
 
         # asking to the user if the hypothesis can not be proven
         if relevant_rules == [] and triplet not in facts:

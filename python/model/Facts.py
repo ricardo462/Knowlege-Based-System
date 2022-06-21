@@ -112,4 +112,8 @@ class Facts:
 
     def get_parameters(self):
         return [self.alpha, self.beta, self.gamma, self.delta, self.epsilon]
-        
+
+    def improvable(self, hypothesis) -> bool: 
+        if self.get_vc_hypothesis(hypothesis) < self.gamma:
+            return True
+        return False
