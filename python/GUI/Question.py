@@ -12,7 +12,7 @@ class Question(tk.Frame):
         frm = ttk.Frame(self.root, padding=10)
         frm.grid()
         ### Question ###
-        ttk.Label(frm, text=f'Question {number}: {question}').grid(column=0, row=0)
+        ttk.Label(frm, text=f'Question: {question}').grid(column=0, row=0)
 
         ### Sacle bar ###
         bar_frm = ttk.Frame(frm, padding=10)

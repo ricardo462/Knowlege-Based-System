@@ -204,6 +204,7 @@ class AEI:
 
     def run(self):
         for triplet in self.high_level_hypotheses:
+            print(self.facts)
             self.AEI_(triplet, self.facts, self.rules)
             self.AEI_(triplet, self.facts, self.rules)
             self.AEI_(triplet, self.facts, self.rules)
