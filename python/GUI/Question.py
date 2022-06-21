@@ -19,7 +19,7 @@ class Question(tk.Frame):
         bar_frm.grid()
         bar_frm.grid(column=0, row=1)
         ttk.Label(bar_frm, text='No').grid(column=0, row=0)
-        self.scale = ttk.Scale(bar_frm, value=0.5)
+        self.scale = ttk.Scale(bar_frm, value=0, from_=-1)
         self.scale.grid(column=1, row=0)
         ttk.Label(bar_frm, text='Yes').grid(column=2, row=0)
 
