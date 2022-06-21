@@ -88,21 +88,21 @@ In order to discover what animal you are thinking about, the program uses the fo
 
 To run the program you have to run the file "main.py", then a window is displayed, where you have to set the following parameters:
 
-- alpha: parameter to determine when a high-level hypothesis has been proven
+- $\alpha$: parameter to determine when a high-level hypothesis has been proven
 satisfactorily, so that it is not necessary to test another hypothesis
 (assuming that these are mutually exclusive hypotheses).
 
-- beta: parameter to determine when a fact (or its negation) has a degree of
+- $\beta$: parameter to determine when a fact (or its negation) has a degree of
 enough certainty to be useful in an inference.
 
-- gamma: parameter to determine when a fact (or its negation) has a degree of
+- $\gamma$: parameter to determine when a fact (or its negation) has a degree of
 enough certainty to not require more effort to improve your grade
 of certainty.
 
-- delta: parameter to determine when a premise has a degree of certainty
-Enough to trigger a rule. $delta(rule) \in [beta , beta/epsilon]$.
+- $\delta$: parameter to determine when a premise has a degree of certainty
+Enough to trigger a rule. $\delta(rule) \in [\beta , \beta/\epsilon]$.
 
-- epsilon: parameter to determine when a rule has a degree of certainty
+- $\epsilon$: parameter to determine when a rule has a degree of certainty
 enough to infer a given hypothesis (or intermediate conclusion),
 assuming the premise is fully satisfied.
 
