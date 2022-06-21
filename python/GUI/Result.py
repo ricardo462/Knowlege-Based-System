@@ -12,30 +12,41 @@ class Result(tk.Frame):
         frm = ttk.Frame(master, padding=10)
         frm.grid()
 
-        for idx, animal in enumerate(animals):
+        ### Directory ###
+        dir = os.path.abspath(__file__)
+        dname = os.path.dirname(dir)
+        dname = os.path.dirname(dname)
+        dname = os.path.dirname(dname)
+
+        row = 0
+        idx = 0
+        for img, animal in enumerate(animals):
+            image_frm = ttk.Frame(frm, padding=10)
             ### Result ###
-            ttk.Label(frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
+            ttk.Label(image_frm, text=f'Your animal is a {animal[0]} with {animal[1]} certain').grid(column=0, row=0) 
 
             ### Image ###
-            dir = os.path.abspath(__file__)
-            dname = os.path.dirname(dir)
-            dname = os.path.dirname(dname)
-            dname = os.path.dirname(dname)
-            image_path = '/resources/' + image_path[idx]
-            image = Image.open(dname + image_path)
-            resized_image = image.resize((400, 205))
+            
+            path = '/resources/' + image_path[img]
+            image = Image.open(dname + path)
+            resized_image = image.resize((300, 154))
             test = ImageTk.PhotoImage(resized_image)
 
-            label = ttk.Label(frm, image=test)
+            label = ttk.Label(image_frm, image=test)
             label.image = test
 
             # Position image
-            label.grid(column=0, row=idx)
+            label.grid(column=0, row=1)
+
+            image_frm.grid(column=idx, row=row)
+            idx += 1
+            if idx // 3 == 1:
+                row += 1
+                idx = 0
 
         ### Next step ###
         bttn_frm = ttk.Frame(frm, padding=10)
-        bttn_frm.grid()
-        bttn_frm.grid(column=0, row=2)
+        bttn_frm.grid(column=0, row=row + 1)
         ttk.Button(bttn_frm, text='Try again', command=self.try_again).grid(column=0, row=0)
         ttk.Button(bttn_frm, text='Close', command=master.destroy).grid(column=1, row=0)
 

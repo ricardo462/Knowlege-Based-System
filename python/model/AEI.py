@@ -200,7 +200,6 @@ class AEI:
         # asking to the user if the hypothesis can not be proven
         if relevant_rules == [] and triplet not in facts:
             certain = self.ask(f'Certain for {triplet}? ')
-            print(certain)
             facts.add(Hypothesis(triplet, certain))
 
     def run(self):
@@ -214,7 +213,7 @@ class AEI:
             if conclusive_hypotheses:
                 print (conclusive_hypotheses)
                 return conclusive_hypotheses
-        print(self.facts.get_high_level_facts())
+        return self.facts.get_high_level_facts()
         
         
 

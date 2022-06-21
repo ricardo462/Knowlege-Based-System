@@ -59,7 +59,7 @@ class Greeting(tk.Frame):
                                         float(self.gamma.get()), 
                                         float(self.delta.get()), 
                                         float(self.epsilon.get()), 
-                                        bool(self.early_stopping.get()))
+                                        early_stopping)
         self.frm.destroy()
         self.controller.run()
         self.controller.make_results()
